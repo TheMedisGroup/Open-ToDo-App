@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   get 'welcome/index'
 
-  get 'welcome/about'
+  root to: 'welcome#index'
 
-  root 'welcome#index'
+  namespace :api, defaults: { format: :json } do
+    resources :users
+  end
+  
 end
 
   # The priority is based upon order of creation: first created -> highest priority.
