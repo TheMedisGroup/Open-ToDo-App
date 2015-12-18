@@ -11,21 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151214132350) do
+ActiveRecord::Schema.define(version: 20151218155634) do
 
   create_table "items", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "list_id"
+    t.string   "name"
+    t.boolean  "completed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
+
+  add_index "items", ["list_id"], name: "index_items_on_list_id"
 
   create_table "lists", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "permissions"
   end
 
+  add_index "lists", ["user_id"], name: "index_lists_on_user_id"
+
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "username"
+    t.string   "password"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
