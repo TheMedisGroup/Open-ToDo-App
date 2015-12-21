@@ -13,8 +13,8 @@ class Api::ItemsController < ApiController
       @items = @list.iteams.all.where(if_complete: false)
       render :json => { errors: "Record not found. Command failed."}, :status => :not_found
     end
-  end
 
+  end
 
   def create
     @item = Item.new(item_params)
