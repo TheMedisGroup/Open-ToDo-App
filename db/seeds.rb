@@ -5,3 +5,53 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+require 'faker'
+
+  10.times do
+    user = User.new(
+      username: Faker::Name.name,
+      email:    Faker::Internet.email,
+      password: Faker::Lorem.characters(10)
+      )
+    user.skip_confirmation!
+    user.save!
+  end
+  user = User.all
+
+  20.times do
+    List.create!(
+        user:         users.sample,
+        title:        Faker::Lorem.sentence,
+        description:  Faker::Lorem.paragraph
+        )
+  end
+  lists = List.all
+
+  50.times do
+    item = Item.create!(
+      description:    Faker::Lorem.paragraph,
+      list: lists.sample
+      )
+    item.update_attributes!(created_at: rand(10.minutes .. 6.days).ago)
+  end
+
+  admin = User.new(
+    username:  'AdminUser',
+    email:     'admin@example.com',
+    password:  'helloworld'
+    )
+    admin.skip_confirmation!
+    admin.save!
+
+  mike = User.new(
+    username: 'mike',
+    email:    'medis.michael@gmail.com',
+    paswaord: 'helloword'
+    )
+    mike.skip_confirmation!
+    mike.save!
+
+puts "Seed finished"
+puts "#{User.count} users created"
+puts "#{List.count} lists created"
+puts "#{Item.count} items created"
