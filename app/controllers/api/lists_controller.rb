@@ -1,6 +1,12 @@
 class Api::ListsController < ApiController
   before_action :authenticated?
 
+  def index
+    @user = User.find(params[:user_id])
+    @list = @user.lists.all
+    render json: @list, each_serializer: ListSerializer
+  end
+  
   def create
     @list = List.new(list_params)
     if @list.save
@@ -22,6 +28,10 @@ class Api::ListsController < ApiController
     end
   end
 
+  def updated
+    list = List.find(params[:id])
+    if list.update(list_params)
+      render json: { errors: list.errors.full_messages }, status: :unprocessable_entity
   private
 
     def list_params

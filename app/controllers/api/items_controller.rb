@@ -2,6 +2,20 @@ class Api::ItemsController < ApiController
 
   before_action :authenticated?
 
+  def index
+    begin
+      if params[:list_id]
+        @list = List.find(params[:list_id])
+      else
+        @item = Item.find(params[:id])
+        @list = List.find(@item.list_id)
+      end
+      @items = @list.iteams.all.where(if_complete: false)
+      render :json => { errors: "Record not found. Command failed."}, :status => :not_found
+    end
+  end
+
+
   def create
     @item = Item.new(item_params)
     if @item.save
