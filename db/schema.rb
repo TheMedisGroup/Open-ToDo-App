@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20151218155634) do
 
   create_table "items", force: :cascade do |t|
     t.integer  "list_id"
+    t.string   "description"
     t.string   "name"
     t.boolean  "completed"
     t.datetime "created_at"
@@ -26,6 +27,7 @@ ActiveRecord::Schema.define(version: 20151218155634) do
   create_table "lists", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name"
+    t.string   "desription"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "permissions", default: "private"
