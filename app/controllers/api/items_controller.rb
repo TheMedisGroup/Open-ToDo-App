@@ -10,7 +10,7 @@ class Api::ItemsController < ApiController
         @item = Item.find(params[:id])
         @list = List.find(@item.list_id)
       end
-      @items = @list.iteams.all.where(if_complete: false)
+      @items = @list.items.all.where(if_complete: false)
       render :json => { errors: "Record not found. Command failed."}, :status => :not_found
     end
 
@@ -28,7 +28,7 @@ class Api::ItemsController < ApiController
 
   private
   def item_params
-    params.require(:item).permit(:name)
+    params.require(:item).permit(:description)
   end
 
 end
