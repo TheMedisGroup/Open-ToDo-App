@@ -1,5 +1,4 @@
 class Api::UsersController < ApiController
-  before_action :authenticated?#, except: [:create]
 
   def index
     @users = User.all

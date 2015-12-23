@@ -28,7 +28,7 @@ class Api::ListsController < ApiController
     end
   end
 
-  def updated
+  def update
     list = List.find(params[:id])
     if list.update(list_params)
       render json: list

@@ -12,6 +12,7 @@
 
 class User < ActiveRecord::Base
 
-  has_many :lists
+  has_many :lists, dependent: :destroy
+  validates :username, length: { minimum: 5 }, presence: true
 
 end
