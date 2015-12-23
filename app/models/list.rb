@@ -14,7 +14,8 @@
 class List < ActiveRecord::Base
 
   belongs_to :user
-  has_many :items
+  has_many :items, dependent: :destroy
+  validates :name, length: { minimum: 5 }, presence: true
 
   # enum permissions: [:]
 
