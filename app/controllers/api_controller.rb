@@ -5,7 +5,10 @@ class ApiController < ApplicationController
   private
 
   def authenticated?
-    authenticate_or_request_with_http_basic { |password, email| User.where( password: password, email: email).present? }
+    authenticate_or_request_with_http_basic do |password, email|
+      resource = User.find_by_email(email)
+      resource.valid_password?(password)
+    end
   end
 
 end

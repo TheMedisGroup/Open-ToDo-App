@@ -10,7 +10,7 @@ class Api::ListsController < ApiController
   def create
     @list = List.new(list_params)
     if @list.save
-      render json: @list
+      render json: @list.to_json
     else
       render json: { errors: @list.errors.full_messages }, status: :unprocessable_entity
     end
@@ -29,17 +29,21 @@ class Api::ListsController < ApiController
   end
 
   def update
-    list = List.find(params[:id])
-    if list.update(list_params)
-      render json: list
-    else
-      render json: { errors: list.errors.full_messages }, status: :unprocessable_entity
+    begin
+      list = List.find(params[:id])
+      if list.update(list_params)
+        render json: list.to_json
+      else
+        render json: { errors: list.errors.full_messages }, status: :unprocessable_entity
+      end
+    rescue ActiveRecord::RecordNotFound
+      render :json => { errors: "List not found. Command failed."}, :status => :not_found
     end
   end
-
+  
   private
 
   def list_params
-    params.require(:list).permit(:name)
+    params.require(:list).permit(:name, :description)
   end
 end
