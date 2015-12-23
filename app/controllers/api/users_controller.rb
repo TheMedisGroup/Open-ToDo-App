@@ -22,9 +22,10 @@ class Api::UsersController < ApiController
     begin
       user = User.find(params[:id])
       if user.destroy
-      render json: {}, status: :no_content
+        render json: { message: "HTTP 204 No Content. User deleted Successfully"}, status: :no_content
+      end
     rescue ActiveRecord::RecordNotFound
-      render :json => {}, :status => :not_found
+      render :json => { errors: "User not found. Command failed."}, :status => :not_found
     end
   end
 
