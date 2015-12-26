@@ -21,7 +21,7 @@ class Api::UsersController < ApiController
   def destroy
     begin
       user = User.find(params[:id])
-      if user.destroy
+        if user.destroy
         render json: { message: "HTTP 204 No Content. User deleted Successfully"}, status: :no_content
       end
     rescue ActiveRecord::RecordNotFound
